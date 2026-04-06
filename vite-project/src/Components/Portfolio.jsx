@@ -26,7 +26,7 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 1 }}
-              className="relative aspect-[3/4] overflow-hidden group"
+              className="relative aspect-3/4 overflow-hidden group"
             >
               <img 
                 src={item} 

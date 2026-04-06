@@ -28,16 +28,21 @@ export default function Hero({ onBookNow }) {
             <p className="text-lg md:text-xl text-luxury-text/70 max-w-md mb-10 font-light tracking-wide">
               A premium grooming experience in the heart of Karnal. Where artistry meets elegance.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4">
-              <button 
+              <button
                 onClick={onBookNow}
                 className="relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.2em] font-bold"
               >
                 <span className="relative z-10">Book Appointment</span>
                 <div className="absolute inset-0 bg-luxury-gold translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
               </button>
-              <button className="px-10 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700">
+              <button
+                onClick={() => {
+                  document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="px-10 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700"
+              >
                 View Services
               </button>
             </div>
@@ -52,14 +57,14 @@ export default function Hero({ onBookNow }) {
             transition={{ duration: 1.5, ease: "easeOut" }}
             className="aspect-[3/4] relative overflow-hidden"
           >
-            <img 
-              src="https://picsum.photos/seed/hair-salon-1/800/1067" 
-              alt="Signature Look" 
+            <img
+              src="https://picsum.photos/seed/hair-salon-1/800/1067"
+              alt="Signature Look"
               className="w-full h-full object-cover grayscale-to-color"
               referrerPolicy="no-referrer"
             />
           </motion.div>
-          
+
           {/* Vertical Text */}
           <div className="absolute -right-8 top-1/2 -translate-y-1/2 hidden xl:block">
             <span className="vertical-text text-[10px] uppercase tracking-[0.5em] text-luxury-text/40 font-bold">
