@@ -14,7 +14,7 @@ export default function Navbar({ onBookNow }) {
         </motion.div>
         
         <div className="hidden md:flex space-x-12 text-xs uppercase tracking-[0.2em] font-medium">
-          {["Home", "Services", "About", "Portfolio",].map((item) => (
+          {["Home", "Services", "About", "Portfolio"].map((item) => (
             <a 
               key={item} 
               href={`#${item.toLowerCase()}`} 
