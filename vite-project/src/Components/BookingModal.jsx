@@ -1,8 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, Clock, Calendar as CalendarIcon, MapPin } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Clock, Calendar as CalendarIcon } from "lucide-react";
 import { useState, useEffect } from "react";
-
-
 
 export default function BookingModal({ isOpen, onClose, initialService }) {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -73,7 +71,12 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
           return (
             <button
               key={`h-${h}`}
-              onClick={() => setSelectedHour(h)}
+              onClick={() => {
+                setSelectedHour(h);
+                if (selectedMinute !== null) {
+                  setShowClock(false);
+                }
+              }}
               style={{ transform: `translate(${x}px, ${y}px)` }}
               className={`absolute h-8 w-8 flex items-center justify-center text-[10px] rounded-full transition-all duration-300
                 ${selectedHour === h ? "bg-luxury-gold text-white" : "hover:bg-luxury-gold/20"}
@@ -84,7 +87,7 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
           );
         })}
 
-        {/* Minutes Circle (Inner) */}
+        {/* Minutes Circle */}
         {minutes.map((m) => {
           const angle = (m * 6 - 90) * (Math.PI / 180);
           const x = Math.cos(angle) * 50;
@@ -92,7 +95,12 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
           return (
             <button
               key={`m-${m}`}
-              onClick={() => setSelectedMinute(m)}
+              onClick={() => {
+                setSelectedMinute(m);
+                if (selectedHour !== null) {
+                  setShowClock(false);
+                }
+              }}
               style={{ transform: `translate(${x}px, ${y}px)` }}
               className={`absolute h-8 w-8 flex items-center justify-center text-[10px] rounded-full transition-all duration-300
                 ${selectedMinute === m ? "bg-luxury-gold text-white" : "hover:bg-luxury-gold/10"}
@@ -135,12 +143,12 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100]"
           />
 
-          {/* Modal Content */}
+          {/* Modal */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed inset-0 m-auto w-full max-w-4xl h-fit max-h-[95vh] bg-luxury-bg z-[101] overflow-y-auto shadow-2xl border border-luxury-text/10"
+            className="fixed inset-0 m-auto w-full max-w-2xl h-fit max-h-[90vh] bg-luxury-bg z-[101] overflow-y-auto shadow-2xl border border-luxury-text/10"
           >
             <div className="relative p-8 md:p-12">
               <button
@@ -200,11 +208,14 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Date Picker */}
+                  {/* Calendar Picker */}
                   <div className="space-y-2 relative">
                     <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Preferred Date</label>
                     <div 
-                      onClick={() => { setShowCalendar(!showCalendar); setShowClock(false); }}
+                      onClick={() => { 
+                        setShowCalendar(!showCalendar); 
+                        setShowClock(false); 
+                      }}
                       className="w-full border-b border-luxury-text/20 py-3 flex items-center justify-between cursor-pointer hover:border-luxury-gold transition-colors"
                     >
                       <span className="font-light text-sm">
@@ -222,11 +233,15 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                           className="absolute top-full left-0 w-full bg-luxury-bg border border-luxury-text/10 p-4 z-50 shadow-2xl mt-2"
                         >
                           <div className="flex items-center justify-between mb-4">
-                            <button onClick={prevMonth} className="p-1 hover:text-luxury-gold"><ChevronLeft size={16} /></button>
+                            <button onClick={prevMonth} className="p-1 hover:text-luxury-gold">
+                              <ChevronLeft size={16} />
+                            </button>
                             <span className="text-[10px] uppercase tracking-widest font-bold">
                               {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                             </span>
-                            <button onClick={nextMonth} className="p-1 hover:text-luxury-gold"><ChevronRight size={16} /></button>
+                            <button onClick={nextMonth} className="p-1 hover:text-luxury-gold">
+                              <ChevronRight size={16} />
+                            </button>
                           </div>
                           <div className="grid grid-cols-7 gap-1 text-center mb-2">
                             {['S','M','T','W','T','F','S'].map(d => (
@@ -241,11 +256,14 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                     </AnimatePresence>
                   </div>
 
-                  {/* Time Picker */}
+                  {/* Clock Picker */}
                   <div className="space-y-2 relative">
                     <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Preferred Time</label>
                     <div 
-                      onClick={() => { setShowClock(!showClock); setShowCalendar(false); }}
+                      onClick={() => { 
+                        setShowClock(!showClock); 
+                        setShowCalendar(false); 
+                      }}
                       className="w-full border-b border-luxury-text/20 py-3 flex items-center justify-between cursor-pointer hover:border-luxury-gold transition-colors"
                     >
                       <span className="font-light text-sm">{selectedTime || "Select Time"}</span>
@@ -265,24 +283,17 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                           <div className="mt-6 flex justify-center space-x-4">
                             <button 
                               onClick={() => setIsAm(true)}
-                              className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border ${isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20'}`}
+                              className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border rounded-sm ${isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20 hover:border-luxury-gold'}`}
                             >
                               AM
                             </button>
                             <button 
                               onClick={() => setIsAm(false)}
-                              className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border ${!isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20'}`}
+                              className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border rounded-sm ${!isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20 hover:border-luxury-gold'}`}
                             >
                               PM
                             </button>
                           </div>
-                          <button 
-                            onClick={() => setShowClock(false)}
-                            disabled={selectedHour === null || selectedMinute === null}
-                            className="w-full mt-6 py-2 text-[8px] uppercase tracking-[0.2em] font-bold border border-luxury-gold text-luxury-gold hover:bg-luxury-gold hover:text-white transition-all disabled:opacity-30"
-                          >
-                            Confirm Time
-                          </button>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -298,9 +309,8 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                   />
                 </div>
 
-
                 <div className="pt-6">
-                  <button className="w-full relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.3em] font-bold">
+                  <button className="w-full relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.3em] font-bold rounded-none">
                     <span className="relative z-10">Submit Request</span>
                     <div className="absolute inset-0 bg-luxury-gold translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
                   </button>
