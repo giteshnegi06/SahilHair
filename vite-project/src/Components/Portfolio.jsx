@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 
+
 const portfolioItems = [
   "https://picsum.photos/seed/model-1/800/1067",
   "https://picsum.photos/seed/model-2/800/1067",

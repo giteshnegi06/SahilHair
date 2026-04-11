@@ -45,14 +45,17 @@ export default function Services() {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -5 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.8 }}
               className="group border-t border-luxury-text/10 pt-10 pb-20 px-4 hover:shadow-2xl transition-all duration-700"
             >
-              <div className="aspect-[3/4] overflow-hidden mb-8">
-                <img 
+              <div className="aspect-3/4 overflow-hidden mb-8">
+                <motion.img 
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 1.5 }}
                   src={service.image} 
                   alt={service.title} 
                   className="w-full h-full object-cover grayscale-to-color"

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 
+
 const testimonials = [
   {
     name: "Ananya Sharma",
@@ -44,7 +45,7 @@ export default function Testimonials() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.8 }}
-                className="group p-10 border-l-2 border-luxury-text/10 hover:border-luxury-gold transition-all duration-700 bg-white/50"
+                className="group p-10 border-l-2 border-luxury-text/10 hover:border-luxury-gold transition-all duration-700 bg-luxury-text/5"
               >
                 <div className="flex items-center space-x-4 mb-8">
                   <div className="w-16 h-16 overflow-hidden grayscale-to-color">

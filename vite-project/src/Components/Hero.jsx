@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 
+
 export default function Hero({ onBookNow }) {
   return (
     <section id="home" className="relative min-h-screen pt-20 flex flex-col items-center justify-center overflow-hidden">
@@ -7,7 +8,13 @@ export default function Hero({ onBookNow }) {
       <div className="absolute inset-0 pointer-events-none opacity-5">
         <div className="h-full w-full grid grid-cols-6 grid-rows-6 border-luxury-text">
           {[...Array(36)].map((_, i) => (
-            <div key={i} className="border border-luxury-text/20" />
+            <motion.div 
+              key={i} 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: i * 0.02, duration: 0.5 }}
+              className="border border-luxury-text/20" 
+            />
           ))}
         </div>
       </div>
@@ -16,13 +23,20 @@ export default function Hero({ onBookNow }) {
         {/* Left Content */}
         <div className="lg:col-span-7">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif leading-[0.9] tracking-tighter mb-8">
               Crafting <br />
-              <span className="italic text-luxury-gold">Signature</span> <br />
+              <motion.span 
+                initial={{ opacity: 0, rotateX: 90 }}
+                animate={{ opacity: 1, rotateX: 0 }}
+                transition={{ delay: 0.5, duration: 1 }}
+                className="italic text-luxury-gold inline-block"
+              >
+                Signature
+              </motion.span> <br />
               Looks
             </h1>
             <p className="text-lg md:text-xl text-luxury-text/70 max-w-md mb-10 font-light tracking-wide">
@@ -52,10 +66,22 @@ export default function Hero({ onBookNow }) {
         {/* Right Image */}
         <div className="lg:col-span-5 relative">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
-            className="aspect-[3/4] relative overflow-hidden"
+            initial={{ opacity: 0, scale: 0.9, y: 50 }}
+            animate={{ 
+              opacity: 1, 
+              scale: 1, 
+              y: [0, -20, 0] 
+            }}
+            transition={{ 
+              opacity: { duration: 1.5 },
+              scale: { duration: 1.5 },
+              y: { 
+                duration: 6, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }
+            }}
+            className="aspect-[3/4] relative overflow-hidden shadow-2xl"
           >
             <img
               src="https://picsum.photos/seed/hair-salon-1/800/1067"

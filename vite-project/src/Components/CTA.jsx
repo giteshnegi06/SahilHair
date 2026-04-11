@@ -2,12 +2,23 @@ import { motion } from "framer-motion";
 
 export default function CTA({ onBookNow }) {
   return (
-    <section className="py-40 bg-luxury-text text-luxury-bg relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[20vw] font-serif italic whitespace-nowrap">
-          SAHIL HAIR EXPERT
-        </div>
+    <section className="py-10 lg:py-40 bg-luxury-text/60 text-luxury-bg relative overflow-hidden">
+      {/* Decorative Marquee */}
+      <div className="absolute top-1/2 -translate-y-1/2 left-0 w-full opacity-10 pointer-events-none overflow-hidden whitespace-nowrap">
+        <motion.div 
+          animate={{ x: [0, "-30%"] }}
+          transition={{ 
+            duration: 30, 
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+          className="text-[25vw] font-serif italic flex w-fit"
+        >
+          <span className="mr-20">SAHIL HAIR EXPERT</span>
+          <span className="mr-20">SAHIL HAIR EXPERT</span>
+          <span className="mr-20">SAHIL HAIR EXPERT</span>
+          <span className="mr-20">SAHIL HAIR EXPERT</span>
+        </motion.div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">

@@ -54,10 +54,12 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1 }}
-            className="lg:col-span-6 relative"
+            className="lg:col-span-6 relative group"
           >
             <div className="aspect-[4/5] overflow-hidden">
-              <img 
+              <motion.img 
+                whileHover={{ scale: 1.1 }}
+                transition={{ duration: 2 }}
                 src="https://picsum.photos/seed/hair-stylist-1/800/1000" 
                 alt="The Studio" 
                 className="w-full h-full object-cover grayscale-to-color"
@@ -65,7 +67,18 @@ export default function About() {
               />
             </div>
             {/* Decorative Frame */}
-            <div className="absolute -bottom-10 -left-10 w-40 h-40 border border-luxury-gold/30 -z-10" />
+            <motion.div 
+              animate={{ 
+                rotate: [0, 5, 0],
+                scale: [1, 1.05, 1]
+              }}
+              transition={{ 
+                duration: 5, 
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="absolute -bottom-10 -left-10 w-40 h-40 border border-luxury-gold/30 -z-10" 
+            />
           </motion.div>
         </div>
       </div>

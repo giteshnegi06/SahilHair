@@ -22,7 +22,6 @@ const packages = [
 ];
 
 
-
 export default function Pricing({ onBookNow }) {
   return (
     <section className="py-32 bg-luxury-bg">
@@ -38,12 +37,17 @@ export default function Pricing({ onBookNow }) {
           {packages.map((pkg, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -10 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 1 }}
-              className={`p-12 border border-luxury-text/10 flex flex-col items-center text-center transition-all duration-700 hover:shadow-xl relative ${
-                pkg.highlight ? "border-t-4 border-t-luxury-gold bg-white z-10 scale-105 shadow-2xl" : "bg-transparent"
+              transition={{ 
+                delay: index * 0.1, 
+                duration: 0.8,
+                whileHover: { duration: 0.3 }
+              }}
+              className={`p-12 border border-luxury-text/10 flex flex-col items-center text-center transition-all duration-700 hover:shadow-2xl relative ${
+                pkg.highlight ? "border-t-4 border-t-luxury-gold bg-luxury-text/5 z-10 scale-105 shadow-2xl" : "bg-transparent"
               }`}
             >
               <h3 className="text-2xl font-serif mb-4">{pkg.name}</h3>
@@ -58,7 +62,7 @@ export default function Pricing({ onBookNow }) {
               </ul>
               
               <button 
-                onClick={onBookNow}
+                onClick={() => onBookNow(pkg.name)}
                 className={`w-full py-5 text-[10px] uppercase tracking-[0.3em] font-bold transition-all duration-500 ${
                 pkg.highlight ? "bg-luxury-gold text-white hover:bg-luxury-text" : "border border-luxury-text hover:bg-luxury-text hover:text-luxury-bg"
               }`}>
