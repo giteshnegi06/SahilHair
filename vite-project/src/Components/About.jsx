@@ -21,7 +21,7 @@ export default function About() {
             </h2>
             <div className="prose prose-lg text-luxury-text/80 font-light leading-relaxed">
               <p className="first-letter:text-7xl first-letter:font-serif first-letter:float-left first-letter:mr-4 first-letter:text-luxury-gold">
-                Sahil Hair Expert is more than just a salon; it's a sanctuary of style in Karnal. 
+                Sahil Hair Expert is more than just a salon; it's a sanctuary of style in Karnal, Haryana. 
                 Founded on the principles of precision and personalized care, we've spent years 
                 perfecting the art of grooming. Our studio brings a touch of global fashion 
                 standards to the local landscape, offering an experience that is both intimate and grand.

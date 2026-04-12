@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
 import TextType from "./TypeText";
 
-
 export default function Hero({ onBookNow }) {
   return (
     <section id="home" className="relative min-h-screen pt-20 flex flex-col items-center justify-center overflow-hidden">
       {/* Background Grid Lines */}
-      <div className="absolute inset-0 pointer-events-none opacity-10">
+      <div className="absolute inset-0 pointer-events-none opacity-5">
         <div className="h-full w-full grid grid-cols-6 grid-rows-6 border-luxury-text">
           {[...Array(36)].map((_, i) => (
             <motion.div 
@@ -14,7 +13,7 @@ export default function Hero({ onBookNow }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: i * 0.02, duration: 0.5 }}
-              className="border border-luxury-text/20 border-b-0" 
+              className="border border-luxury-text/20" 
             />
           ))}
         </div>
@@ -29,6 +28,7 @@ export default function Hero({ onBookNow }) {
             transition={{ duration: 1, ease: "easeOut" }}
           >
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-serif leading-[0.9] tracking-tighter mb-8">
+              <span className="sr-only">Sahil Hair Expert - Best Hair Stylist & Makeover Studio in Karnal, Haryana</span>
               Crafting <br />
               <motion.span 
                 initial={{ opacity: 0, rotateX: 90 }}
@@ -41,35 +41,30 @@ export default function Hero({ onBookNow }) {
               Looks
             </h1>
             <p className="text-lg md:text-xl text-luxury-text/70 max-w-md mb-10 font-light tracking-wide">
-              <TextType 
-  text={["A premium grooming experience in the heart of Karnal. Where artistry meets elegance."]}
-  typingSpeed={75}
-  pauseDuration={1500}
-  showCursor
-  cursorCharacter="_"
-  texts={["A premium grooming experience in the heart of Karnal. Where artistry meets elegance."]}
-  deletingSpeed={50}
-  variableSpeedEnabled={false}
-  variableSpeedMin={60}
-  variableSpeedMax={120}
-  cursorBlinkDuration={0.5}
-/>
+              <TextType
+                text={["A premium grooming experience in the heart of Karnal. Where artistry meets elegance."]}
+                typingSpeed={75}
+                pauseDuration={1500}
+                showCursor
+                cursorCharacter="_"
+                texts={["A premium grooming experience in the heart of Karnal. Where artistry meets elegance."]}
+                deletingSpeed={50}
+                variableSpeedEnabled={false}
+                variableSpeedMin={60}
+                variableSpeedMax={120}
+                cursorBlinkDuration={0.5}
+              />
             </p>
-
+            
             <div className="flex flex-col sm:flex-row gap-4">
-              <button
+              <button 
                 onClick={onBookNow}
                 className="relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.2em] font-bold"
               >
                 <span className="relative z-10">Book Appointment</span>
                 <div className="absolute inset-0 bg-luxury-gold translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
               </button>
-              <button
-                onClick={() => {
-                  document.getElementById("services")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="px-10 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700"
-              >
+              <button className="px-10 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700">
                 View Services
               </button>
             </div>
@@ -96,14 +91,14 @@ export default function Hero({ onBookNow }) {
             }}
             className="aspect-[3/4] relative overflow-hidden shadow-2xl"
           >
-            <img
-              src="https://picsum.photos/seed/hair-salon-1/800/1067"
-              alt="Signature Look"
+            <img 
+              src="https://picsum.photos/seed/hair-salon-1/800/1067" 
+              alt="Luxury Hair Styling and Grooming at Sahil Hair Expert Karnal" 
               className="w-full h-full object-cover grayscale-to-color"
               referrerPolicy="no-referrer"
             />
           </motion.div>
-
+          
           {/* Vertical Text */}
           <div className="absolute -right-8 top-1/2 -translate-y-1/2 hidden xl:block">
             <span className="vertical-text text-[10px] uppercase tracking-[0.5em] text-luxury-text/40 font-bold">

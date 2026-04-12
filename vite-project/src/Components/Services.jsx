@@ -52,12 +52,12 @@ export default function Services() {
               transition={{ delay: index * 0.1, duration: 0.8 }}
               className="group border-t border-luxury-text/10 pt-10 pb-20 px-4 hover:shadow-2xl transition-all duration-700"
             >
-              <div className="aspect-3/4 overflow-hidden mb-8">
+              <div className="aspect-[3/4] overflow-hidden mb-8">
                 <motion.img 
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 1.5 }}
                   src={service.image} 
-                  alt={service.title} 
+                  alt={`${service.title} - Professional Salon Service at Sahil Hair Expert Karnal`} 
                   className="w-full h-full object-cover grayscale-to-color"
                   referrerPolicy="no-referrer"
                 />

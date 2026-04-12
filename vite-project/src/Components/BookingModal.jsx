@@ -8,13 +8,39 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
   const [showCalendar, setShowCalendar] = useState(false);
   const [showClock, setShowClock] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedHour, setSelectedHour] = useState(null);
-  const [selectedMinute, setSelectedMinute] = useState(null);
-  const [isAm, setIsAm] = useState(false);
 
-  // Calendar Helpers
-  const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
-  const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
+  // Form State
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    service: "",
+    requests: ""
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const dateStr = selectedDate ? selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : "Not selected";
+    const timeStr = selectedTime || "Not selected";
+    
+    const message = `New Appointment Request 👇🏻\n\n` +
+      `Name: ${formData.name}\n` +
+      `Phone: ${formData.phone}\n` +
+      `Service: ${formData.service}\n` +
+      `Date: ${dateStr}\n` +
+      `Time: ${timeStr}\n` +
+      `Requests: ${formData.requests || "None"}`;
+
+    const whatsappUrl = `https://wa.me/918894143680?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+  };
+const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
 
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
@@ -37,6 +63,7 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
       days.push(
         <button
           key={d}
+          type="button"
           onClick={() => {
             setSelectedDate(date);
             setShowCalendar(false);
@@ -56,10 +83,45 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
   const nextMonth = () => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)));
   const prevMonth = () => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)));
 
+  const [selectedHour, setSelectedHour] = useState(null);
+  const [selectedMinute, setSelectedMinute] = useState(null);
+  const [isAm, setIsAm] = useState(false);
+
+  // Reset state when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setSelectedDate(null);
+      setSelectedTime("");
+      setSelectedHour(null);
+      setSelectedMinute(null);
+      setIsAm(false);
+      setShowCalendar(false);
+      setShowClock(false);
+      setCurrentMonth(new Date());
+      setFormData({
+        name: "",
+        phone: "",
+        service: initialService || "",
+        requests: ""
+      });
+    }
+  }, [isOpen, initialService]);
+
   // Clock Helpers
   const renderClock = () => {
     const hours = Array.from({ length: 12 }, (_, i) => i + 1);
     const minutes = [0, 15, 30, 45];
+    
+    const handleHourSelect = (h) => {
+      setSelectedHour(h);
+    };
+
+    const handleMinuteSelect = (m) => {
+      setSelectedMinute(m);
+      if (selectedHour !== null) {
+        setTimeout(() => setShowClock(false), 300);
+      }
+    };
     
     return (
       <div className="relative w-64 h-64 rounded-full border border-luxury-text/10 flex items-center justify-center mx-auto">
@@ -71,15 +133,11 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
           return (
             <button
               key={`h-${h}`}
-              onClick={() => {
-                setSelectedHour(h);
-                if (selectedMinute !== null) {
-                  setShowClock(false);
-                }
-              }}
+              type="button"
+              onClick={() => handleHourSelect(h)}
               style={{ transform: `translate(${x}px, ${y}px)` }}
-              className={`absolute h-8 w-8 flex items-center justify-center text-[10px] rounded-full transition-all duration-300
-                ${selectedHour === h ? "bg-luxury-gold text-white" : "hover:bg-luxury-gold/20"}
+              className={`absolute h-9 w-9 flex items-center justify-center text-xs rounded-full transition-all duration-300
+                ${selectedHour === h ? "bg-luxury-gold text-white" : "hover:bg-luxury-gold/20 text-luxury-text/60"}
               `}
             >
               {h}
@@ -87,7 +145,7 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
           );
         })}
 
-        {/* Minutes Circle */}
+        {/* Minutes Circle (Inner) */}
         {minutes.map((m) => {
           const angle = (m * 6 - 90) * (Math.PI / 180);
           const x = Math.cos(angle) * 50;
@@ -95,15 +153,11 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
           return (
             <button
               key={`m-${m}`}
-              onClick={() => {
-                setSelectedMinute(m);
-                if (selectedHour !== null) {
-                  setShowClock(false);
-                }
-              }}
+              type="button"
+              onClick={() => handleMinuteSelect(m)}
               style={{ transform: `translate(${x}px, ${y}px)` }}
               className={`absolute h-8 w-8 flex items-center justify-center text-[10px] rounded-full transition-all duration-300
-                ${selectedMinute === m ? "bg-luxury-gold text-white" : "hover:bg-luxury-gold/10"}
+                ${selectedMinute === m ? "bg-luxury-gold text-white" : "hover:bg-luxury-gold/10 text-luxury-text/40"}
               `}
             >
               {m === 0 ? "00" : m}
@@ -115,7 +169,7 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
         
         {/* Center Display */}
         <div className="absolute text-center">
-          <div className="text-xl font-serif">
+          <div className="text-xl font-serif text-luxury-gold">
             {selectedHour || "--"}:{selectedMinute !== null ? selectedMinute.toString().padStart(2, '0') : "--"}
           </div>
           <div className="text-[8px] uppercase tracking-widest opacity-40">{isAm ? "AM" : "PM"}</div>
@@ -130,6 +184,7 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
     }
   }, [selectedHour, selectedMinute, isAm]);
 
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -140,15 +195,15 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-100"
           />
 
-          {/* Modal */}
+          {/* Modal Content */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed inset-0 m-auto w-full max-w-2xl h-fit max-h-[90vh] bg-luxury-bg z-[101] overflow-y-auto shadow-2xl border border-luxury-text/10"
+            className="fixed inset-0 m-auto w-full max-w-2xl h-fit max-h-[90vh] bg-luxury-bg z-101 overflow-y-auto shadow-2xl border border-luxury-text/10"
           >
             <div className="relative p-8 md:p-12">
               <button
@@ -165,12 +220,16 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                 <h2 className="text-4xl md:text-5xl font-serif">Request an Appointment</h2>
               </div>
 
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Full Name</label>
                     <input
                       type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
                       placeholder="John Doe"
                       className="w-full bg-transparent border-b border-luxury-text/20 py-3 focus:border-luxury-gold outline-none transition-colors font-light"
                     />
@@ -179,6 +238,10 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                     <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Phone Number</label>
                     <input
                       type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
                       placeholder="+91 00000 00000"
                       className="w-full bg-transparent border-b border-luxury-text/20 py-3 focus:border-luxury-gold outline-none transition-colors font-light"
                     />
@@ -188,16 +251,19 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                 <div className="space-y-2">
                   <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Select Service</label>
                   <select 
-                    defaultValue={initialService}
+                    name="service"
+                    value={formData.service}
+                    onChange={handleInputChange}
+                    required
                     className="w-full bg-transparent border-b border-luxury-text/20 py-3 focus:border-luxury-gold outline-none transition-colors font-light appearance-none cursor-pointer"
                   >
                     <option value="">Choose a service...</option>
-                    <optgroup label="Packages">
+                    <optgroup label="Packages" className="bg-luxury-bg">
                       <option value="Essential Grooming">Essential Grooming</option>
                       <option value="The Signature Experience">The Signature Experience</option>
                       <option value="Bridal / Groom Royale">Bridal / Groom Royale</option>
                     </optgroup>
-                    <optgroup label="Individual Services">
+                    <optgroup label="Individual Services" className="bg-luxury-bg">
                       <option value="haircut">Precision Haircut</option>
                       <option value="beard">Beard Styling</option>
                       <option value="makeup">Bridal Makeover</option>
@@ -208,14 +274,11 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Calendar Picker */}
+                  {/* Apple Like Calendar */}
                   <div className="space-y-2 relative">
                     <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Preferred Date</label>
                     <div 
-                      onClick={() => { 
-                        setShowCalendar(!showCalendar); 
-                        setShowClock(false); 
-                      }}
+                      onClick={() => { setShowCalendar(!showCalendar); setShowClock(false); }}
                       className="w-full border-b border-luxury-text/20 py-3 flex items-center justify-between cursor-pointer hover:border-luxury-gold transition-colors"
                     >
                       <span className="font-light text-sm">
@@ -233,19 +296,15 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                           className="absolute top-full left-0 w-full bg-luxury-bg border border-luxury-text/10 p-4 z-50 shadow-2xl mt-2"
                         >
                           <div className="flex items-center justify-between mb-4">
-                            <button onClick={prevMonth} className="p-1 hover:text-luxury-gold">
-                              <ChevronLeft size={16} />
-                            </button>
+                            <button type="button" onClick={prevMonth} className="p-1 hover:text-luxury-gold"><ChevronLeft size={16} /></button>
                             <span className="text-[10px] uppercase tracking-widest font-bold">
                               {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                             </span>
-                            <button onClick={nextMonth} className="p-1 hover:text-luxury-gold">
-                              <ChevronRight size={16} />
-                            </button>
+                            <button type="button" onClick={nextMonth} className="p-1 hover:text-luxury-gold"><ChevronRight size={16} /></button>
                           </div>
                           <div className="grid grid-cols-7 gap-1 text-center mb-2">
-                            {['S','M','T','W','T','F','S'].map(d => (
-                              <span key={d} className="text-[8px] opacity-40">{d}</span>
+                            {['S','M','T','W','T','F','S'].map((d, i) => (
+                              <span key={`${d}-${i}`} className="text-[8px] opacity-40">{d}</span>
                             ))}
                           </div>
                           <div className="grid grid-cols-7 gap-1">
@@ -256,14 +315,11 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                     </AnimatePresence>
                   </div>
 
-                  {/* Clock Picker */}
+                  {/* Clock Type Time Picker */}
                   <div className="space-y-2 relative">
                     <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Preferred Time</label>
                     <div 
-                      onClick={() => { 
-                        setShowClock(!showClock); 
-                        setShowCalendar(false); 
-                      }}
+                      onClick={() => { setShowClock(!showClock); setShowCalendar(false); }}
                       className="w-full border-b border-luxury-text/20 py-3 flex items-center justify-between cursor-pointer hover:border-luxury-gold transition-colors"
                     >
                       <span className="font-light text-sm">{selectedTime || "Select Time"}</span>
@@ -282,14 +338,16 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                           {renderClock()}
                           <div className="mt-6 flex justify-center space-x-4">
                             <button 
+                              type="button"
                               onClick={() => setIsAm(true)}
-                              className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border rounded-sm ${isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20 hover:border-luxury-gold'}`}
+                              className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border ${isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20'}`}
                             >
                               AM
                             </button>
                             <button 
+                              type="button"
                               onClick={() => setIsAm(false)}
-                              className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border rounded-sm ${!isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20 hover:border-luxury-gold'}`}
+                              className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border ${!isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20'}`}
                             >
                               PM
                             </button>
@@ -303,6 +361,9 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                 <div className="space-y-2">
                   <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Special Requests</label>
                   <textarea
+                    name="requests"
+                    value={formData.requests}
+                    onChange={handleInputChange}
                     rows={3}
                     placeholder="Tell us about your requirements..."
                     className="w-full bg-transparent border-b border-luxury-text/20 py-3 focus:border-luxury-gold outline-none transition-colors font-light resize-none"
@@ -310,7 +371,7 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                 </div>
 
                 <div className="pt-6">
-                  <button className="w-full relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.3em] font-bold rounded-none">
+                  <button className="w-full relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.3em] font-bold">
                     <span className="relative z-10">Submit Request</span>
                     <div className="absolute inset-0 bg-luxury-gold translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
                   </button>
@@ -326,3 +387,4 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
     </AnimatePresence>
   );
 }
+

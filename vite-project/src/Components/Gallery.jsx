@@ -47,17 +47,17 @@ export default function Gallery() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 1 }}
-              className="group relative aspect-[4/5] overflow-hidden bg-luxury-text/5"
+              className="group relative aspect-4/5 overflow-hidden bg-luxury-text/5"
             >
               <motion.img
                 whileHover={{ scale: 1.15, rotate: 1 }}
                 transition={{ duration: 1.5 }}
                 src={image.url}
-                alt={image.title}
+                alt={`${image.title} - ${image.category} by Sahil Hair Expert Karnal`} 
                 className="w-full h-full object-cover grayscale-to-color"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-luxury-bg via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-end p-8">
+              <div className="absolute inset-0 bg-linear-to-t from-luxury-bg via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex flex-col justify-end p-8">
                 <span className="text-[10px] uppercase tracking-widest text-luxury-gold font-bold mb-2">
                   {image.category}
                 </span>
