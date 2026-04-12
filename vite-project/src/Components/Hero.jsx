@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
+import TextType from "./TypeText";
 
 
 export default function Hero({ onBookNow }) {
   return (
     <section id="home" className="relative min-h-screen pt-20 flex flex-col items-center justify-center overflow-hidden">
       {/* Background Grid Lines */}
-      <div className="absolute inset-0 pointer-events-none opacity-5">
+      <div className="absolute inset-0 pointer-events-none opacity-10">
         <div className="h-full w-full grid grid-cols-6 grid-rows-6 border-luxury-text">
           {[...Array(36)].map((_, i) => (
             <motion.div 
@@ -13,7 +14,7 @@ export default function Hero({ onBookNow }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: i * 0.02, duration: 0.5 }}
-              className="border border-luxury-text/20" 
+              className="border border-luxury-text/20 border-b-0" 
             />
           ))}
         </div>
@@ -40,7 +41,19 @@ export default function Hero({ onBookNow }) {
               Looks
             </h1>
             <p className="text-lg md:text-xl text-luxury-text/70 max-w-md mb-10 font-light tracking-wide">
-              A premium grooming experience in the heart of Karnal. Where artistry meets elegance.
+              <TextType 
+  text={["A premium grooming experience in the heart of Karnal. Where artistry meets elegance."]}
+  typingSpeed={75}
+  pauseDuration={1500}
+  showCursor
+  cursorCharacter="_"
+  texts={["A premium grooming experience in the heart of Karnal. Where artistry meets elegance."]}
+  deletingSpeed={50}
+  variableSpeedEnabled={false}
+  variableSpeedMin={60}
+  variableSpeedMax={120}
+  cursorBlinkDuration={0.5}
+/>
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
