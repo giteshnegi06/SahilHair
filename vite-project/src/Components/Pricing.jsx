@@ -43,8 +43,8 @@ export default function Pricing({ onBookNow }) {
               viewport={{ once: true }}
               transition={{ 
                 delay: index * 0.1, 
-                duration: 0.8,
-                whileHover: { duration: 0.3 }
+                duration: 0.1,
+                whileHover: { duration: 0.1 }
               }}
               className={`p-12 border border-luxury-text/10 flex flex-col items-center text-center transition-all duration-700 hover:shadow-2xl relative ${
                 pkg.highlight ? "border-t-4 border-t-luxury-gold bg-luxury-text/5 z-10 scale-105 shadow-2xl" : "bg-transparent"
@@ -53,7 +53,7 @@ export default function Pricing({ onBookNow }) {
               <h3 className="text-2xl font-serif mb-4">{pkg.name}</h3>
               <div className="text-4xl font-serif text-luxury-gold mb-10">{pkg.price}</div>
               
-              <ul className="space-y-4 mb-12 flex-grow">
+              <ul className="space-y-4 mb-12 grow">
                 {pkg.features.map((feature, i) => (
                   <li key={i} className="text-xs uppercase tracking-widest text-luxury-text/60">
                     {feature}

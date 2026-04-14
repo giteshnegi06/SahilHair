@@ -64,7 +64,9 @@ export default function Hero({ onBookNow }) {
                 <span className="relative z-10">Book Appointment</span>
                 <div className="absolute inset-0 bg-luxury-gold translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
               </button>
-              <button className="px-10 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700">
+              <button
+                onClick={() => document.getElementById('services').scrollIntoView({ behavior: 'smooth' })}
+                className="px-10 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700">
                 View Services
               </button>
             </div>
@@ -89,7 +91,7 @@ export default function Hero({ onBookNow }) {
                 ease: "easeInOut" 
               }
             }}
-            className="aspect-[3/4] relative overflow-hidden shadow-2xl"
+            className="aspect-3/4 relative overflow-hidden shadow-2xl"
           >
             <img 
               src="https://picsum.photos/seed/hair-salon-1/800/1067" 
@@ -109,7 +111,7 @@ export default function Hero({ onBookNow }) {
       </div>
 
       {/* Decorative Line */}
-      <div className="absolute bottom-10 left-0 w-full h-[1px] bg-luxury-text/10" />
+      <div className="absolute bottom-10 left-0 w-full h-px bg-luxury-text/10" />
     </section>
   );
 }
