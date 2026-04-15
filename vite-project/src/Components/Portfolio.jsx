@@ -32,7 +32,7 @@ export default function Portfolio() {
               <img 
                 src={item} 
                 alt={`Portfolio ${index + 1}`} 
-                className="w-full h-full object-cover grayscale-to-color group-hover:scale-110 transition-transform duration-[2000ms]"
+                className="w-full h-full object-cover grayscale-to-color group-hover:scale-110 transition-transform duration-2000"
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-luxury-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
@@ -41,9 +41,13 @@ export default function Portfolio() {
         </div>
         
         <div className="mt-20 text-center">
-          <button className="px-12 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700">
+          <a href="https://www.instagram.com/sahil__hair_expert?utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer">
+            <button className="px-12 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700">
             Follow on Instagram
           </button>
+          </a>
         </div>
       </div>
     </section>

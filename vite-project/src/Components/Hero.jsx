@@ -40,7 +40,7 @@ export default function Hero({ onBookNow }) {
               </motion.span> <br />
               Looks
             </h1>
-            <p className="text-lg md:text-xl text-luxury-text/70 max-w-md mb-10 font-light tracking-wide">
+            <h3 className="text-lg md:text-xl text-luxury-text/70 max-w-md mb-10 font-light tracking-wide">
               <TextType
                 text={["A premium grooming experience in the heart of Karnal. Where artistry meets elegance."]}
                 typingSpeed={75}
@@ -54,7 +54,7 @@ export default function Hero({ onBookNow }) {
                 variableSpeedMax={120}
                 cursorBlinkDuration={0.5}
               />
-            </p>
+            </h3>
             
             <div className="flex flex-col sm:flex-row gap-4">
               <button 

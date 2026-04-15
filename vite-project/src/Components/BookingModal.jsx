@@ -1,21 +1,33 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, Clock, Calendar as CalendarIcon } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
+
 
 export default function BookingModal({ isOpen, onClose, initialService }) {
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedTime, setSelectedTime] = useState("");
-  const [showCalendar, setShowCalendar] = useState(false);
-  const [showClock, setShowClock] = useState(false);
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+ const [selectedDate, setSelectedDate] = useState(null);
+const [selectedTime, setSelectedTime] = useState("");
+const [showCalendar, setShowCalendar] = useState(false);
+const [showClock, setShowClock] = useState(false);
+const [currentMonth, setCurrentMonth] = useState(new Date());
 
   // Form State
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    service: "",
+    services: [],
     requests: ""
   });
+
+  const toggleService = (service) => {
+    setFormData(prev => {
+      const isSelected = prev.services.includes(service);
+      if (isSelected) {
+        return { ...prev, services: prev.services.filter(s => s !== service) };
+      } else {
+        return { ...prev, services: [...prev.services, service] };
+      }
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,22 +37,29 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     
+    if (formData.services.length === 0) {
+      alert("Please select at least one service.");
+      return;
+    }
+    
     const dateStr = selectedDate ? selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : "Not selected";
     const timeStr = selectedTime || "Not selected";
     
     const message = `New Appointment Request 👇🏻\n\n` +
       `Name: ${formData.name}\n` +
       `Phone: ${formData.phone}\n` +
-      `Service: ${formData.service}\n` +
+      `Services: ${formData.services.join(", ")}\n` +
       `Date: ${dateStr}\n` +
       `Time: ${timeStr}\n` +
       `Requests: ${formData.requests || "None"}`;
 
-    const whatsappUrl = `https://wa.me/918894143680?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/919992310449?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
   };
-const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
-const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
+
+  // Calendar Helpers
+  const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+  const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
 
   const renderCalendar = () => {
     const year = currentMonth.getFullYear();
@@ -82,9 +101,8 @@ const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
 
   const nextMonth = () => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)));
   const prevMonth = () => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)));
-
-  const [selectedHour, setSelectedHour] = useState(null);
-  const [selectedMinute, setSelectedMinute] = useState(null);
+const [selectedHour, setSelectedHour] = useState(null);
+const [selectedMinute, setSelectedMinute] = useState(null);
   const [isAm, setIsAm] = useState(false);
 
   // Reset state when modal opens
@@ -101,7 +119,7 @@ const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
       setFormData({
         name: "",
         phone: "",
-        service: initialService || "",
+        services: initialService ? [initialService] : [],
         requests: ""
       });
     }
@@ -124,7 +142,7 @@ const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
     };
     
     return (
-      <div className="relative w-64 h-64 rounded-full border border-luxury-text/10 flex items-center justify-center mx-auto">
+      <div className="relative  w-64 h-64 rounded-full border border-luxury-text/10 flex items-center justify-center mx-auto">
         {/* Hours Circle */}
         {hours.map((h) => {
           const angle = (h * 30 - 90) * (Math.PI / 180);
@@ -184,7 +202,6 @@ const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
     }
   }, [selectedHour, selectedMinute, isAm]);
 
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -203,7 +220,7 @@ const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed inset-0 m-auto w-full max-w-2xl h-fit max-h-[90vh] bg-luxury-bg z-101 overflow-y-auto shadow-2xl border border-luxury-text/10"
+            className="fixed inset-0 m-auto w-full max-w-2xl h-fit max-h-[90vh] bg-luxury-bg z-101 overflow-y-auto no-scrollbar shadow-2xl border border-luxury-text/10"
           >
             <div className="relative p-8 md:p-12">
               <button
@@ -248,29 +265,37 @@ const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Select Service</label>
-                  <select 
-                    name="service"
-                    value={formData.service}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full bg-transparent border-b border-luxury-text/20 py-3 focus:border-luxury-gold outline-none transition-colors font-light appearance-none cursor-pointer"
-                  >
-                    <option value="">Choose a service...</option>
-                    <optgroup label="Packages" className="bg-luxury-bg">
-                      <option value="Essential Grooming">Essential Grooming</option>
-                      <option value="The Signature Experience">The Signature Experience</option>
-                      <option value="Bridal / Groom Royale">Bridal / Groom Royale</option>
-                    </optgroup>
-                    <optgroup label="Individual Services" className="bg-luxury-bg">
-                      <option value="haircut">Precision Haircut</option>
-                      <option value="beard">Beard Styling</option>
-                      <option value="makeup">Bridal Makeover</option>
-                      <option value="color">Hair Color</option>
-                      <option value="spa">Hair Spa & Treatment</option>
-                    </optgroup>
-                  </select>
+                <div className="space-y-4">
+                  <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Select Services (Multiple)</label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {[
+                      { id: "Curly Treatment", category: "Hair Treatment" },
+                      { id: "Perming", category: "Hair Treatment" },
+                      { id: "Keratin Hair Extensions", category: "Hair Treatment" },
+                      { id: "Wig & Hair Patch", category: "Hair Treatment" },
+                      { id: "Curly Hair Extensions", category: "Individual" },
+                      { id: "UV Light Extensions", category: "Individual" },
+                      { id: "Precision Haircut", category: "Individual" },
+                      { id: "Beard Styling", category: "Individual" },
+                      { id: "Bridal Makeover", category: "Individual" },
+                      { id: "Hair Color", category: "Individual" },
+                      { id: "Hair Spa & Treatment", category: "Individual" }
+                    ].map((service) => (
+                      <button
+                        key={service.id}
+                        type="button"
+                        onClick={() => toggleService(service.id)}
+                        className={`px-4 py-3 text-[10px] uppercase tracking-widest font-medium border transition-all duration-300 text-left flex flex-col justify-between h-full
+                          ${formData.services.includes(service.id) 
+                            ? "bg-luxury-gold border-luxury-gold text-white" 
+                            : "border-luxury-text/10 hover:border-luxury-gold/50 text-luxury-text/60"}
+                        `}
+                      >
+                        <span className="opacity-50 text-[8px] mb-1">{service.category}</span>
+                        <span>{service.id}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -332,7 +357,7 @@ const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
-                          className="absolute top-full left-0 w-full bg-luxury-bg border border-luxury-text/10 p-6 z-50 shadow-2xl mt-2"
+                          className="absolute top-full left-0 w-full bg-luxury-bg border border-luxury-text/10 py-5 z-50 shadow-2xl mt-2"
                         >
                           <div className="text-center mb-4 text-[10px] uppercase tracking-widest font-bold">Select Hour</div>
                           {renderClock()}
@@ -371,7 +396,10 @@ const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
                 </div>
 
                 <div className="pt-6">
-                  <button className="w-full relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.3em] font-bold">
+                  <button 
+                    type="submit"
+                    className="w-full relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.3em] font-bold"
+                  >
                     <span className="relative z-10">Submit Request</span>
                     <div className="absolute inset-0 bg-luxury-gold translate-x-[-101%] group-hover:translate-x-0 transition-transform duration-700 ease-in-out" />
                   </button>
