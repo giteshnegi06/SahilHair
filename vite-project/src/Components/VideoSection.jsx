@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 
 const videos = [
-  { id: "QIbB_LPFom4", title: "Signature Styling" },
-  { id: "UGtsIHfjX60", title: "Luxury Grooming" },
-  { id: "EcPXSr_s8FQ", title: "Bridal Artistry" },
-  { id: "0rbW_7NaTZI", title: "Color Transformation" },
+  { id: "QIbB_LPFom4", title: "Hair Treatment" },
+  { id: "UGtsIHfjX60", title: "Keratin Treatment" },
+  { id: "EcPXSr_s8FQ", title: "How To Care For Your Hair" },
+  { id: "0rbW_7NaTZI", title: "Tan Removal" },
 ];
 
 export default function VideoSection() {
