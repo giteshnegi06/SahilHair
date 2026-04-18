@@ -13,7 +13,7 @@ export default function Navbar({ onBookNow }) {
           SAHIL <span className="text-luxury-gold">HAIR</span> EXPERT
         </motion.div>
         
-        <div className="hidden md:flex space-x-12 text-xs uppercase tracking-[0.2em] font-medium">
+        <div className="hidden lg:flex space-x-12 text-xs uppercase tracking-[0.2em] font-medium">
           {["Home", "Services", "About", "Portfolio"].map((item) => (
             <a 
               key={item} 
@@ -23,6 +23,9 @@ export default function Navbar({ onBookNow }) {
               {item}
             </a>
           ))}
+          <a href="/" className="hover:text-luxury-gold transition-colors duration-300">
+            Products
+          </a>
         </div>
         
         <motion.button

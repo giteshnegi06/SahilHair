@@ -69,6 +69,11 @@ export default function Hero({ onBookNow }) {
                 className="px-10 py-5 border border-luxury-text text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700">
                 View Services
               </button>
+              <a href="/" className="lg:hidden border border-luxury-text text-center">
+                <button className="px-10 py-5  text-xs uppercase tracking-[0.2em] font-bold hover:bg-luxury-text hover:text-luxury-bg transition-all duration-700  ">
+                  View Products
+                </button>
+              </a>
             </div>
           </motion.div>
         </div>
