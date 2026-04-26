@@ -8,7 +8,7 @@ export default function CTA({ onBookNow }) {
         <motion.div 
           animate={{ x: [0, "-30%"] }}
           transition={{ 
-            duration: 30, 
+            duration: 80, 
             repeat: Infinity, 
             ease: "linear" 
           }}
