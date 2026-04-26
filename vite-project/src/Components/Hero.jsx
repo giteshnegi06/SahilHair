@@ -43,12 +43,12 @@ export default function Hero({ onBookNow }) {
             <div className="h-20 mb-2">
               <h3 className="text-lg md:text-xl text-luxury-text/70 max-w-md font-light tracking-wide">
                 <TextType
-                  text={["A premium grooming and hair Treatment experience in Karnal. Where artistry meets elegance."]}
+                  text={["A premium grooming and hair Treatment in Karnal. Where artistry meets elegance."]}
                   typingSpeed={75}
                   pauseDuration={1500}
                   showCursor
                   cursorCharacter="_"
-                  texts={["A premium grooming and hair Treatment experience in Karnal. Where artistry meets elegance."]}
+                  texts={["A premium grooming and hair Treatment in Karnal. Where artistry meets elegance."]}
                   deletingSpeed={50}
                   variableSpeedEnabled={false}
                   variableSpeedMin={60}
