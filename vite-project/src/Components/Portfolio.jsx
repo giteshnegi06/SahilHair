@@ -26,8 +26,8 @@ export default function Portfolio() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 1 }}
-              className="relative aspect-3/4 overflow-hidden group"
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="relative aspect-3/4  group"
             >
               <img 
                 src={item} 
@@ -35,7 +35,7 @@ export default function Portfolio() {
                 className="w-full h-full object-cover grayscale-to-color group-hover:scale-110 transition-transform duration-2000"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-luxury-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              {/* <div className="absolute inset-0 bg-luxury-text/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" /> */}
             </motion.div>
           ))}
         </div>

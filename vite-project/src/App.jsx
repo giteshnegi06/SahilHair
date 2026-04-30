@@ -8,6 +8,7 @@ import Navbar from "./Components/Navbar";
 import Hero from "./Components/Hero";
 import Gallery from "./Components/Gallery";
 import About from "./Components/About";
+import Barbers from "./Components/Barber";
 import Services from "./Components/Services";
 import Portfolio from "./Components/Portfolio";
 import VideoSection from "./Components/VideoSection";
@@ -30,6 +31,7 @@ export default function App() {
         <Hero onBookNow={openBooking} />
         <Gallery/>
         <About />
+        <Barbers />
         <Services />
         <Portfolio />
         <VideoSection/>

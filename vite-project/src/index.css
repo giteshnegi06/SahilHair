@@ -22,7 +22,7 @@
 
 @layer utilities {
   .grayscale-to-color {
-    @apply grayscale transition-all duration-2000 ease-in-out hover:grayscale-0;
+    @apply grayscale transition-all duration-[2000ms] ease-in-out hover:grayscale-0;
   }
   
   .vertical-text {

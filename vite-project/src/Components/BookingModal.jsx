@@ -4,16 +4,17 @@ import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 
 
 export default function BookingModal({ isOpen, onClose, initialService }) {
- const [selectedDate, setSelectedDate] = useState(null);
-const [selectedTime, setSelectedTime] = useState("");
-const [showCalendar, setShowCalendar] = useState(false);
-const [showClock, setShowClock] = useState(false);
-const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState("");
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [showClock, setShowClock] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
   // Form State
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    barber: "",
     services: [],
     requests: ""
   });
@@ -36,18 +37,19 @@ const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (formData.services.length === 0) {
       alert("Please select at least one service.");
       return;
     }
-    
+
     const dateStr = selectedDate ? selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : "Not selected";
     const timeStr = selectedTime || "Not selected";
-    
+
     const message = `New Appointment Request 👇🏻\n\n` +
       `Name: ${formData.name}\n` +
       `Phone: ${formData.phone}\n` +
+      `Barber: ${formData.barber || "Any available"}\n` +
       `Services: ${formData.services.join(", ")}\n` +
       `Date: ${dateStr}\n` +
       `Time: ${timeStr}\n` +
@@ -101,8 +103,8 @@ const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const nextMonth = () => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() + 1)));
   const prevMonth = () => setCurrentMonth(new Date(currentMonth.setMonth(currentMonth.getMonth() - 1)));
-const [selectedHour, setSelectedHour] = useState(null);
-const [selectedMinute, setSelectedMinute] = useState(null);
+  const [selectedHour, setSelectedHour] = useState(null);
+  const [selectedMinute, setSelectedMinute] = useState(null);
   const [isAm, setIsAm] = useState(false);
 
   // Reset state when modal opens
@@ -129,7 +131,7 @@ const [selectedMinute, setSelectedMinute] = useState(null);
   const renderClock = () => {
     const hours = Array.from({ length: 12 }, (_, i) => i + 1);
     const minutes = [0, 15, 30, 45];
-    
+
     const handleHourSelect = (h) => {
       setSelectedHour(h);
     };
@@ -140,7 +142,7 @@ const [selectedMinute, setSelectedMinute] = useState(null);
         setTimeout(() => setShowClock(false), 300);
       }
     };
-    
+
     return (
       <div className="relative  w-64 h-64 rounded-full border border-luxury-text/10 flex items-center justify-center mx-auto">
         {/* Hours Circle */}
@@ -184,7 +186,7 @@ const [selectedMinute, setSelectedMinute] = useState(null);
         })}
 
         <div className="w-1 h-1 bg-luxury-gold rounded-full" />
-        
+
         {/* Center Display */}
         <div className="absolute text-center">
           <div className="text-xl font-serif text-luxury-gold">
@@ -286,8 +288,8 @@ const [selectedMinute, setSelectedMinute] = useState(null);
                         type="button"
                         onClick={() => toggleService(service.id)}
                         className={`px-4 py-3 text-[10px] uppercase tracking-widest font-medium border transition-all duration-300 text-left flex flex-col justify-between h-full
-                          ${formData.services.includes(service.id) 
-                            ? "bg-luxury-gold border-luxury-gold text-white" 
+                          ${formData.services.includes(service.id)
+                            ? "bg-luxury-gold border-luxury-gold text-white"
                             : "border-luxury-text/10 hover:border-luxury-gold/50 text-luxury-text/60"}
                         `}
                       >
@@ -298,11 +300,36 @@ const [selectedMinute, setSelectedMinute] = useState(null);
                   </div>
                 </div>
 
+                <div className="space-y-4">
+                  <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Choose Your Expert</label>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {[
+                      { id: "Sahil", role: "Master Stylist" },
+                      { id: "Vikram", role: "Beard Architect" },
+                      { id: "Arjun", role: "Senior Barber" }
+                    ].map((barber) => (
+                      <button
+                        key={barber.id}
+                        type="button"
+                        onClick={() => setFormData(prev => ({ ...prev, barber: prev.barber === barber.id ? "" : barber.id }))}
+                        className={`px-4 py-3 text-[10px] uppercase tracking-widest font-medium border transition-all duration-300 text-left flex flex-col justify-between h-full
+                          ${formData.barber === barber.id
+                            ? "bg-luxury-gold border-luxury-gold text-white"
+                            : "border-luxury-text/10 hover:border-luxury-gold/50 text-luxury-text/60"}
+                        `}
+                      >
+                        <span className="opacity-50 text-[8px] mb-1">{barber.role}</span>
+                        <span>{barber.id}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Apple Like Calendar */}
                   <div className="space-y-2 relative">
                     <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Preferred Date</label>
-                    <div 
+                    <div
                       onClick={() => { setShowCalendar(!showCalendar); setShowClock(false); }}
                       className="w-full border-b border-luxury-text/20 py-3 flex items-center justify-between cursor-pointer hover:border-luxury-gold transition-colors"
                     >
@@ -311,10 +338,10 @@ const [selectedMinute, setSelectedMinute] = useState(null);
                       </span>
                       <CalendarIcon size={16} className="text-luxury-gold" />
                     </div>
-                    
+
                     <AnimatePresence>
                       {showCalendar && (
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
@@ -328,7 +355,7 @@ const [selectedMinute, setSelectedMinute] = useState(null);
                             <button type="button" onClick={nextMonth} className="p-1 hover:text-luxury-gold"><ChevronRight size={16} /></button>
                           </div>
                           <div className="grid grid-cols-7 gap-1 text-center mb-2">
-                            {['S','M','T','W','T','F','S'].map((d, i) => (
+                            {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d, i) => (
                               <span key={`${d}-${i}`} className="text-[8px] opacity-40">{d}</span>
                             ))}
                           </div>
@@ -343,7 +370,7 @@ const [selectedMinute, setSelectedMinute] = useState(null);
                   {/* Clock Type Time Picker */}
                   <div className="space-y-2 relative">
                     <label className="text-[10px] uppercase tracking-widest font-bold opacity-50">Preferred Time</label>
-                    <div 
+                    <div
                       onClick={() => { setShowClock(!showClock); setShowCalendar(false); }}
                       className="w-full border-b border-luxury-text/20 py-3 flex items-center justify-between cursor-pointer hover:border-luxury-gold transition-colors"
                     >
@@ -353,7 +380,7 @@ const [selectedMinute, setSelectedMinute] = useState(null);
 
                     <AnimatePresence>
                       {showClock && (
-                        <motion.div 
+                        <motion.div
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: 10 }}
@@ -362,14 +389,14 @@ const [selectedMinute, setSelectedMinute] = useState(null);
                           <div className="text-center mb-4 text-[10px] uppercase tracking-widest font-bold">Select Hour</div>
                           {renderClock()}
                           <div className="mt-6 flex justify-center space-x-4">
-                            <button 
+                            <button
                               type="button"
                               onClick={() => setIsAm(true)}
                               className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border ${isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20'}`}
                             >
                               AM
                             </button>
-                            <button 
+                            <button
                               type="button"
                               onClick={() => setIsAm(false)}
                               className={`text-[8px] uppercase tracking-widest font-bold px-3 py-1 border ${!isAm ? 'bg-luxury-gold text-white border-luxury-gold' : 'border-luxury-text/20'}`}
@@ -396,7 +423,7 @@ const [selectedMinute, setSelectedMinute] = useState(null);
                 </div>
 
                 <div className="pt-6">
-                  <button 
+                  <button
                     type="submit"
                     className="w-full relative group overflow-hidden px-10 py-5 bg-luxury-text text-luxury-bg text-xs uppercase tracking-[0.3em] font-bold"
                   >
