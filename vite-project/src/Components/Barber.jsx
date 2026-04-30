@@ -106,8 +106,8 @@ export default function Barbers() {
                                 </div>
 
                                 {/* 🟨 Google-style badge */}
-                                <div className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-400/50 text-black text-xs font-semibold rounded-md">
-                                    <Star size={12} className="fill-black" />
+                                <div className="inline-flex items-center gap-1 px-2 py-1 bg-luxury-gold/30 text-white/70 text-xs font-semibold rounded-md">
+                                    <Star size={12} className="fill-luxury-gold" />
                                     {barber.rating} • {barber.reviews} reviews
                                 </div>
                             </div>
