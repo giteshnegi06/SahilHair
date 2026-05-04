@@ -1,26 +1,30 @@
 import { motion } from "framer-motion";
+import Hair from "../Images/Stlying.jpg";
+import Makeover from "../Images/Makeover.jpg";
+import Hairtreatments from "../Images/HAirtreatement.jpg";
+import Perming from "../Images/perming.png";
 
 const services = [
   {
-    title: "Precision Haircuts",
-    description: "Tailored cuts that complement your face shape and personal style.",
-    image: "https://picsum.photos/seed/haircut/600/800",
-  },
-  {
-    title: "Artisanal Beard Styling",
-    description: "Expert grooming for the modern gentleman. Sharp, clean, and defined.",
-    image: "https://picsum.photos/seed/beard/600/800",
+    title: "Hair Styling",
+    description: "Professional styling for every occasion — sleek, voluminous, or trendy looks tailored to you.",
+    image: Hair
   },
   {
     title: "Bridal Makeover",
-    description: "Exquisite makeup and styling for your most special day.",
-    image: "https://picsum.photos/seed/makeup/600/800",
+    description: "Exquisite makeup and hairstyling to make you shine on your special day.",
+    image: Makeover
   },
   {
-    title: "Couture Hair Color",
-    description: "From subtle highlights to bold transformations using premium products.",
-    image: "https://picsum.photos/seed/hair-color/600/800",
+    title: "Hair Treatments (Wig & Patch)",
+    description: "Advanced solutions like wigs and hair patches for a natural, confident look.",
+    image: Hairtreatments
   },
+  {
+    title: "Hair Perming",
+    description: "Get long-lasting curls or waves with modern, damage-minimizing perm techniques.",
+    image: Perming
+  }
 ];
 
 export default function Services() {
@@ -53,11 +57,11 @@ export default function Services() {
               className="group border-t border-luxury-text/10 pt-10 pb-20 px-4 hover:shadow-2xl transition-all duration-700"
             >
               <div className="aspect-3/4 overflow-hidden mb-8">
-                <motion.img 
+                <motion.img
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 1.5 }}
-                  src={service.image} 
-                  alt={`${service.title} - Professional Salon Service at Sahil Hair Expert Karnal`} 
+                  src={service.image}
+                  alt={`${service.title} - Professional Salon Service at Sahil Hair Expert Karnal`}
                   className="w-full h-full object-cover grayscale-to-color"
                   referrerPolicy="no-referrer"
                 />

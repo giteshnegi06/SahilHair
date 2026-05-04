@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 
 
 const portfolioItems = [
-  "https://picsum.photos/seed/model-1/800/1067",
-  "https://picsum.photos/seed/model-2/800/1067",
-  "https://picsum.photos/seed/model-3/800/1067",
-  "https://picsum.photos/seed/model-4/800/1067",
+  "https://images.unsplash.com/photo-1595476108010-b4d1f102b1b1?q=80&w=800&h=1067&auto=format&fit=crop", // Hair styling model
+  "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&h=1067&auto=format&fit=crop", // Bridal makeup
+  "https://images.unsplash.com/photo-1605497788044-5a32c7078486?q=80&w=800&h=1067&auto=format&fit=crop", // Hair treatment / wig
+  "https://images.unsplash.com/photo-1560869713-7d0a29430803?q=80&w=800&h=1067&auto=format&fit=crop",
 ];
 
 export default function Portfolio() {

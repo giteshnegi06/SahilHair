@@ -101,7 +101,7 @@ export default function Hero({ onBookNow }) {
             className="aspect-3/4 relative overflow-hidden shadow-2xl"
           >
             <img
-              src="https://picsum.photos/seed/hair-salon-1/800/1067"
+              src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=1200" 
               alt="Luxury Hair Styling and Grooming at Sahil Hair Expert Karnal"
               className="w-full h-full object-cover grayscale-to-color"
               referrerPolicy="no-referrer"

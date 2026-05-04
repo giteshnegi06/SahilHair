@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import Saloon from "../assets/Saloon.png";
 
 export default function About() {
   return (
@@ -60,7 +61,7 @@ export default function About() {
               <motion.img 
                 whileHover={{ scale: 1.1 }}
                 transition={{ duration: 2 }}
-                src="https://picsum.photos/seed/hair-stylist-1/800/1000" 
+                src={Saloon}
                 alt="The Studio" 
                 className="w-full h-full object-cover grayscale-to-color"
                 referrerPolicy="no-referrer"

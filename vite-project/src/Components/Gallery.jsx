@@ -1,23 +1,24 @@
 import { motion } from "framer-motion";
+import Bridal from "../Images/Bridal.jpg";
 
 const galleryImages = [
   {
-    url: "https://picsum.photos/seed/hair-1/800/1000",
+    url: "https://images.pexels.com/photos/3992874/pexels-photo-3992874.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
     title: "Editorial Cut",
     category: "Styling"
   },
   {
-    url: "https://picsum.photos/seed/hair-2/800/1000",
+    url: "https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
     title: "Golden Glow",
     category: "Color"
   },
   {
-    url: "https://picsum.photos/seed/hair-3/800/1000",
+    url: "https://images.pexels.com/photos/1805600/pexels-photo-1805600.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
     title: "Sharp Precision",
     category: "Barbering"
   },
   {
-    url: "https://picsum.photos/seed/hair-4/800/1000",
+    url: Bridal,
     title: "Bridal Elegance",
     category: "Makeover"
   }
@@ -53,7 +54,7 @@ export default function Gallery() {
                 whileHover={{ scale: 1.15, rotate: 1 }}
                 transition={{ duration: 1.5 }}
                 src={image.url}
-                alt={`${image.title} - ${image.category} by Sahil Hair Expert Karnal`} 
+                alt={`${image.title} - ${image.category} by Sahil Hair Expert Karnal`}
                 className="w-full h-full object-cover grayscale-to-color"
                 referrerPolicy="no-referrer"
               />
