@@ -277,11 +277,12 @@ export default function BookingModal({ isOpen, onClose, initialService }) {
                       { id: "Wig & Hair Patch", category: "Hair Treatment" },
                       { id: "Curly Hair Extensions", category: "Individual" },
                       { id: "UV Light Extensions", category: "Individual" },
-                      { id: "Precision Haircut", category: "Individual" },
-                      { id: "Beard Styling", category: "Individual" },
-                      { id: "Bridal Makeover", category: "Individual" },
+                      { id: "Deadlock Hair", category: "Hair Treatment" },
                       { id: "Hair Color", category: "Individual" },
-                      { id: "Hair Spa & Treatment", category: "Individual" }
+                      { id: "Hair Spa & Treatment", category: "Individual" },
+                      { id: "Essential Grooming", category: "Package" },
+                      { id: "The Signature Experience", category: "Package" },
+                      { id: "Bridal / Groom Royale", category: "Package" },
                     ].map((service) => (
                       <button
                         key={service.id}

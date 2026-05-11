@@ -27,7 +27,18 @@ const services = [
   }
 ];
 
-export default function Services() {
+const rateList = [
+  { name: "Curly Treatment", price: "₹3k - ₹5k" },
+  { name: "Perming", price: "₹1800 / ₹2500 / ₹5k" },
+  { name: "Curly Hair Extensions", price: "₹5k / ₹8k / ₹10k" },
+  { name: "Keratin Hair Extensions", price: "₹8k - ₹15k" },
+  { name: "UV Light Extensions", price: "₹5k / ₹10k / ₹20k" },
+  { name: "Deadlock Hair", price: "₹5k / ₹15k / ₹30k" },
+  { name: "Wig & Hair Patch", price: "₹3k / ₹8k / ₹25k" },
+  { name: "Hair Protection", price: "₹2k / ₹5k / ₹8k" }
+];
+
+export default function Services({ onBookNow }) {
   return (
     <section id="services" className="py-32 bg-luxury-bg">
       <div className="max-w-7xl mx-auto px-6">
@@ -74,6 +85,34 @@ export default function Services() {
               </p>
             </motion.div>
           ))}
+        </div>
+
+        {/* Rate List Section */}
+        <div className="mt-32 border-t border-luxury-text/10 pt-20">
+          <div className="text-center mb-16">
+            <span className="text-xs uppercase tracking-[0.5em] text-luxury-gold font-bold mb-4 block">
+              Menu
+            </span>
+            <h3 className="text-4xl md:text-5xl font-serif">Rate List</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-6 max-w-5xl mx-auto">
+            {rateList.map((item, index) => (
+              <div key={index} className="flex justify-between items-center border-b border-luxury-text/10 py-4 group hover:border-luxury-gold transition-colors duration-500">
+                <div className="flex flex-col">
+                  <span className="text-luxury-text font-light text-lg group-hover:text-luxury-gold transition-colors duration-500">{item.name}</span>
+                </div>
+                <div className="flex items-center gap-6">
+                  <span className="text-luxury-gold font-serif text-lg">{item.price}</span>
+                  <button 
+                    onClick={() => onBookNow(item.name)}
+                    className="text-[10px] uppercase tracking-widest font-bold px-4 py-2 border border-luxury-text/20 hover:border-luxury-gold hover:bg-luxury-gold hover:text-white transition-all duration-300"
+                  >
+                    Book
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -20,28 +20,35 @@ import BookingModal from "./Components/BookingModal";
 
 export default function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState(null);
 
-  const openBooking = () => setIsBookingOpen(true);
-  const closeBooking = () => setIsBookingOpen(false);
+  const openBooking = (service = null) => {
+    setSelectedService(service);
+    setIsBookingOpen(true);
+  };
+  const closeBooking = () => {
+    setIsBookingOpen(false);
+    setSelectedService(null);
+  };
 
   return (
     <div className="min-h-screen bg-luxury-bg selection:bg-luxury-gold selection:text-white">
-      <Navbar onBookNow={openBooking} />
+      <Navbar onBookNow={() => openBooking()} />
       <main>
-        <Hero onBookNow={openBooking} />
+        <Hero onBookNow={() => openBooking()} />
         <Gallery/>
         <About />
         <Barbers />
-        <Services />
+        <Services onBookNow={openBooking} />
         <Portfolio />
         <VideoSection/>
-        <Testimonials />
         <Pricing onBookNow={openBooking} />
-        <CTA onBookNow={openBooking} />
+        <CTA onBookNow={() => openBooking()} />
+        <Testimonials />
       </main>
       <Footer />
       
-      <BookingModal isOpen={isBookingOpen} onClose={closeBooking} />
+      <BookingModal isOpen={isBookingOpen} onClose={closeBooking} initialService={selectedService} />
     </div>
   );
 }
